@@ -2,7 +2,7 @@ exp:
   dir: logs/vqa2/ban
   resume: # last, best_[...], or empty (from scratch)
 dataset:
-  import: murel.datasets.factory
+  import: ban.datasets.factory
   name: vqa2 # or vqa2vg
   dir: data/vqa/vqa2
   train_split: train
@@ -21,8 +21,8 @@ dataset:
 model:
   name: default
   network:
-    import: murel.models.networks.factory
-    name: murel_net
+    import: ban.models.networks.factory
+    name: ban_net
     txt_enc:
       name: skipthoughts
       type: BayesianUniSkip
@@ -74,23 +74,27 @@ model:
       #   kmax: 2
       #   kmin: 2
     classif:
-      fusion:
-        type: block
-        input_dims: [4800, 2048]
+      slp:
+        input_dim: 4800
         output_dim: 3000 #Fixed
-        mm_dim: 1600
-        chunks: 20
-        rank: 10
-        dropout_input: 0.1
-        dropout_pre_lin: 0.
+        #classif:
+        #fusion:
+        #type: block
+        #input_dims: [4800, 2048]
+        #output_dim: 3000 #Fixed
+        #mm_dim: 1600
+        #chunks: 20
+        #rank: 10
+        #dropout_input: 0.1
+        #dropout_pre_lin: 0.
   criterion:
-    import: murel.models.criterions.factory
+    import: ban.models.criterions.factory
     name: vqa_cross_entropy
   metric:
-    import: murel.models.metrics.factory
+    import: ban.models.metrics.factory
     name: vqa_accuracies
 optimizer:
-  import: murel.optimizers.factory
+  import: ban.optimizers.factory
   name: Adam
   lr: 0.0003
   gradual_warmup_steps: [0.5, 2.0, 7.0] #torch.linspace
@@ -100,7 +104,7 @@ engine:
   name: logger
   debug: False
   print_freq: 10
-  nb_epochs: 10
+  nb_epochs: 1
   saving_criteria:
   - eval_epoch.accuracy_top1:max
 misc:
@@ -108,7 +112,7 @@ misc:
   cuda: True
   seed: 1337
 views:
-  names: 
+  names:
   - plotly
   - tensorboard
   items_plotly:
