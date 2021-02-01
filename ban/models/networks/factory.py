@@ -15,12 +15,10 @@ def factory(engine):
     if opt['name'] == 'ban_net':
         net = BanNet(
             txt_enc=opt['txt_enc'],
-            self_q_att=opt['self_q_att'],
-            n_step=opt['n_step'],
-            shared=opt['shared'],
-            cell=opt['cell'],
-            agg=opt['agg'],
-            classif=opt['classif'],
+            glimpse=opt['glimpse'],
+            objects=opt['objects'],
+            feat_dims=opt['feat_dims'],
+            q_max_length=opt['q_max_length'],
             wid_to_word=dataset.wid_to_word,
             word_to_wid=dataset.word_to_wid,
             aid_to_ans=dataset.aid_to_ans,

@@ -29,47 +29,65 @@ model:
       dropout: 0.25
       fixed_emb: False
       dir_st: data/skip-thoughts
-    self_q_att: True
-    n_step: 3
-    shared: True
-    cell:
-      residual: True
-      fusion:
-        type: block
-        input_dims: [4800, 2048]
-        output_dim: 2048
-        mm_dim: 1000
-        chunks: 20
-        rank: 15
-        dropout_input: 0.1
-        dropout_pre_lin: 0.
-      pairwise:
-        residual: True
-        fusion_coord:
-          type: block
-          input_dims: [4, 4]
-          output_dim: 2048
-          mm_dim: 200
-          chunks: 5
-          rank: 5
-          dropout_input: 0.
-          dropout_pre_lin: 0.
-        fusion_feat:
-          type: block
-          input_dims: [2048, 2048]
-          output_dim: 2048
-          mm_dim: 200
-          chunks: 5
-          rank: 5
-          dropout_input: 0.
-          dropout_pre_lin: 0.
-        agg:
-          type: max # | mean | weldon
+  # self_q_att: True
+  # n_step: 3
+  # shared: True
+  # cell:
+    q_max_length: 14
+    glimpse: 2
+    objects: 36
+    feat_dims:
+      v_dim: 2048
+      q_dim: 2400
+      h_dim: 2400
+    classifier:
+      in_dim: 2400
+      out_dim: 3000
+
+
+    # biattention:
+    #   v_dim: 2048
+    #   q_dim: 2400
+    #   h_dim: 512
+    # biattention_net:
+    #   num_hid:
+  #    residual: True
+  #    fusion:
+      #   type: block
+      #   input_dims: [4800, 2048]
+      #   output_dim: 2048
+      #   mm_dim: 1000
+      #   chunks: 20
+      #   rank: 15
+      #   dropout_input: 0.1
+      #   dropout_pre_lin: 0.
+      # pairwise:
+      #   residual: True
+      #   fusion_coord:
+      #     type: block
+      #     input_dims: [4, 4]
+      #     output_dim: 2048
+      #     mm_dim: 200
+      #     chunks: 5
+      #     rank: 5
+      #     dropout_input: 0.
+      #     dropout_pre_lin: 0.
+      #   fusion_feat:
+      #     type: block
+      #     input_dims: [2048, 2048]
+      #     output_dim: 2048
+      #     mm_dim: 200
+      #     chunks: 5
+      #     rank: 5
+   #      dropout_input: 0.
+   #      dropout_pre_lin: 0.
+   #    agg:
+   #      type: max # | mean | weldon
           # weldon:
           #   kmax: 2
           #   kmin: 2
-    agg:
-      type: max # | mean | weldon
+    # agg:
+    #   type: max # | mean | weldon
       # weldon:
       #   kmax: 2
       #   kmin: 2
@@ -104,7 +122,7 @@ engine:
   name: logger
   debug: False
   print_freq: 10
-  nb_epochs: 1
+  nb_epochs: 2
   saving_criteria:
   - eval_epoch.accuracy_top1:max
 misc:
