@@ -6,4 +6,7 @@ and use [Cadene/murel.bootstrap.pytorch](https://github.com/Cadene/murel.bootstr
 bootstrap.pytorch](https://github.com/Cadene/bootstrap.pytorch) as frameworks to executes VQA.
 
 ## Usage
-#### training 
+### training 
+```
+python -m bootstrap.run -o ban/options/vqa2/ban.yaml
+```
